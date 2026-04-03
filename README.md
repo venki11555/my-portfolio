@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # venkateshk-my-portfolio
 
 This portfolio now builds its projects section from `public/github-projects.json`.
@@ -20,3 +21,6 @@ Example entry:
   "repositoryLinkEnabled": false
 }
 ```
+=======
+
+>>>>>>> f630f1482ca63bff00e791913cb92766320b3481
