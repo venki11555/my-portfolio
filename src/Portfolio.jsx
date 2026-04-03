@@ -337,6 +337,15 @@ const GlobalStyle = () => (
       font-size: 1.05rem; font-weight: 700;
       color: #fff; margin-bottom: 12px; position: relative; z-index: 1;
     }
+    .project-repo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      color: rgba(200,232,240,0.54);
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.06em;
+    }
     .project-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
     .stack-badge {
       font-family: 'Share Tech Mono', monospace;
@@ -378,6 +387,11 @@ const GlobalStyle = () => (
       height: 2px;
       background: linear-gradient(90deg, var(--cyan), var(--purple), transparent);
     }
+    .projects-footer {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+    }
 
     /* ── Stat strip ── */
     .stat-strip {
@@ -403,6 +417,16 @@ const GlobalStyle = () => (
       font-size: 0.72rem; color: rgba(200,232,240,0.5);
       letter-spacing: 0.15em; text-transform: uppercase;
       margin-top: 8px; display: block;
+    }
+    .profile-summary {
+      max-width: 860px;
+      margin-bottom: 56px;
+      font-size: 0.94rem;
+      line-height: 1.85;
+      color: rgba(200,232,240,0.74);
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 24px 26px;
     }
 
     /* ── Contact Section ── */
@@ -534,10 +558,23 @@ const GlobalStyle = () => (
     }
     .edu-school { font-size: 0.84rem; color: var(--cyan); margin-bottom: 6px; font-style: italic; }
     .edu-year { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: rgba(200,232,240,0.45); margin-bottom: 10px; }
+    .edu-meta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.74rem;
+      color: rgba(200,232,240,0.58);
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
     .edu-cgpa {
       font-family: 'Orbitron', sans-serif;
       font-size: 1.4rem; font-weight: 900; color: var(--gold);
       text-shadow: var(--glow-gold);
+    }
+    .edu-coursework {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: rgba(200,232,240,0.66);
     }
   `}</style>
 );
@@ -709,15 +746,44 @@ function TiltCard({ children, className }) {
 
 /* ─── DATA ─── */
 const skills = [
-  { cat: "Frontend", tags: ["React.js", "HTML5", "CSS3", "Bootstrap", "UI/UX", "Responsive Design"] },
-  { cat: "Backend & APIs", tags: ["Django", "REST APIs", "Python", "Authentication", "CRUD"] },
-  { cat: "AI / ML", tags: ["Scikit-learn", "Pandas", "NumPy", "Neural Networks", "ML Basics"] },
-  { cat: "Database", tags: ["SQL", "Data Modeling", "Query Optimization"] },
+  { cat: "Frontend", tags: ["React.js", "JavaScript", "HTML5", "CSS3", "Bootstrap", "Responsive Design"] },
+  { cat: "Backend & APIs", tags: ["Python", "Django", "REST APIs", "Authentication", "CRUD", "Backend Integration"] },
+  { cat: "Programming", tags: ["Java", "C", "SQL", "Data Structures"] },
+  { cat: "AI / ML", tags: ["Scikit-learn", "Pandas", "NumPy", "Neural Networks", "Machine Learning", "Deep Learning"] },
   { cat: "Tools & Platforms", tags: ["Git", "GitHub", "VS Code", "Netlify", "Vercel"] },
   { cat: "Finance & Banking", tags: ["Banking Ops", "Financial Analysis", "KYC/AML", "RBI Guidelines", "Loan Processing"] },
 ];
 
 const githubUsername = "venki11555";
+const maxVisibleProjects = 6;
+const projectsDataUrl = `${process.env.PUBLIC_URL || ""}/github-projects.json`;
+
+const professionalSummary =
+  "Results-driven Frontend Developer with hands-on experience in React.js, JavaScript, HTML, CSS, and Bootstrap, along with practical exposure to Django, REST APIs, SQL, and full-stack application development. Worked on banking-focused Android application frontend development at Infiny Global Pvt Ltd and contributed to web projects including the Karnataka Suman TV website, which was designed by me. Also experienced in AI/ML-based project work, with a strong ability to build responsive, user-centered, and business-focused digital solutions. Eager to contribute to frontend, full-stack, or FinTech roles in a growth-oriented organization.";
+
+const projectMetadata = {
+  pixelaudiowebsite: {
+    priority: 1,
+    title: "Karnataka Suman TV Website",
+    description:
+      "Designed by me and developed as part of project work delivered through Infiny Global Pvt Ltd. The website focuses on clean content presentation, responsive layout behavior, and a professional media-style browsing experience.",
+    tags: ["Frontend", "Media Website", "Designed by Me", "Infiny Global Pvt Ltd"],
+  },
+  "PROJECT-SNYCON-INFRA": {
+    priority: 2,
+    title: "Backend Projects",
+    description:
+      "Backend and infrastructure-oriented project work that reflects my ability to contribute beyond the UI layer and collaborate on real-world application delivery.",
+    tags: ["Backend", "Infrastructure", "JavaScript", "Project Setup"],
+  },
+  "my-portfolio": {
+    priority: 3,
+    title: "Portfolio Website",
+    description:
+      "Personal portfolio project built with React.js to present my experience, professional summary, and selected GitHub work in a clean and recruiter-friendly format.",
+    tags: ["React.js", "Portfolio", "Frontend", "Responsive UI"],
+  },
+};
 
 const fallbackProjects = [
   {
@@ -728,6 +794,7 @@ const fallbackProjects = [
     language: null,
     stargazers_count: 0,
     pushed_at: "2026-03-05T04:45:14Z",
+    visibility: "public",
   },
   {
     name: "PROJECT-SNYCON-INFRA",
@@ -737,8 +804,52 @@ const fallbackProjects = [
     language: "JavaScript",
     stargazers_count: 0,
     pushed_at: "2026-02-13T12:51:34Z",
+    visibility: "public",
+  },
+  {
+    name: "my-portfolio",
+    html_url: "https://github.com/venki11555/my-portfolio",
+    description: null,
+    homepage: null,
+    language: "JavaScript",
+    stargazers_count: 0,
+    pushed_at: "2026-04-01T19:31:20Z",
+    visibility: "public",
   },
 ];
+
+function normalizeProject(project) {
+  return {
+    name: project.name,
+    html_url: project.html_url || "",
+    description: project.description || null,
+    homepage: project.homepage || null,
+    language: project.language || null,
+    stargazers_count: project.stargazers_count ?? 0,
+    pushed_at: project.pushed_at || null,
+    visibility: project.visibility || "public",
+  };
+}
+
+function getProjectPriority(project) {
+  return projectMetadata[project.name]?.priority ?? 100;
+}
+
+function byProjectPriority(a, b) {
+  const priorityDiff = getProjectPriority(a) - getProjectPriority(b);
+
+  if (priorityDiff !== 0) {
+    return priorityDiff;
+  }
+
+  const aDate = a.pushed_at ? new Date(a.pushed_at).getTime() : 0;
+  const bDate = b.pushed_at ? new Date(b.pushed_at).getTime() : 0;
+  return bDate - aDate;
+}
+
+function getProjectTitle(project) {
+  return projectMetadata[project.name]?.title || project.name;
+}
 
 function formatProjectDate(dateString) {
   if (!dateString) return "Recently updated";
@@ -749,10 +860,40 @@ function formatProjectDate(dateString) {
 }
 
 function getProjectDescription(project) {
-  return project.description || "Open this repository on GitHub to view the latest code, commits, and project details.";
+  return (
+    projectMetadata[project.name]?.description
+    || project.description
+    || "Open this repository on GitHub to view the latest code, commits, and project details."
+  );
+}
+
+function getProjectTags(project) {
+  if (projectMetadata[project.name]?.tags) {
+    return projectMetadata[project.name].tags;
+  }
+
+  return [
+    project.language || "GitHub",
+    project.visibility === "private" ? "Private Repo" : "Public Repo",
+    `${project.stargazers_count} Stars`,
+  ];
+}
+
+function getProjectRepoLabel(project) {
+  return `${githubUsername}/${project.name}`;
 }
 
 const internships = [
+  {
+    year: "1 Year",
+    role: "Frontend Developer",
+    company: "Infiny Global Private LTD",
+    bullets: [
+      "Worked on frontend development for banking-focused Android application workflows",
+      "Built and improved user interfaces for reliable financial and customer-facing journeys",
+      "Collaborated with backend and business teams to deliver practical real-world product features",
+    ],
+  },
   {
     year: "2023",
     role: "AI Intern",
@@ -778,35 +919,76 @@ const internships = [
 
 /* ─── MAIN ─── */
 export default function Portfolio() {
-  const [githubProjects, setGithubProjects] = useState(fallbackProjects);
+  const [githubProjects, setGithubProjects] = useState(fallbackProjects.map(normalizeProject));
   const [projectCount, setProjectCount] = useState(fallbackProjects.length);
 
   useEffect(() => {
     const controller = new AbortController();
 
+    const loadStaticProjects = async () => {
+      const response = await fetch(projectsDataUrl, {
+        signal: controller.signal,
+        headers: {
+          Accept: "application/json",
+        },
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Projects feed request failed with ${response.status}`);
+      }
+
+      const data = await response.json();
+      const projects = Array.isArray(data.projects) ? data.projects.map(normalizeProject).sort(byProjectPriority) : [];
+
+      if (projects.length === 0) {
+        return false;
+      }
+
+      setProjectCount(data.totalCount || projects.length);
+      setGithubProjects(projects.slice(0, data.maxVisibleProjects || maxVisibleProjects));
+      return true;
+    };
+
+    const loadBrowserProjects = async () => {
+      const response = await fetch(
+        `https://api.github.com/users/${githubUsername}/repos?per_page=100&sort=updated`,
+        {
+          signal: controller.signal,
+          headers: {
+            Accept: "application/vnd.github+json",
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(`GitHub request failed with ${response.status}`);
+      }
+
+      const repos = await response.json();
+      const publicRepos = repos.filter((repo) => !repo.fork).map(normalizeProject).sort(byProjectPriority);
+
+      if (publicRepos.length > 0) {
+        setProjectCount(publicRepos.length);
+        setGithubProjects(publicRepos.slice(0, maxVisibleProjects));
+      }
+    };
+
     const loadGitHubProjects = async () => {
       try {
-        const response = await fetch(
-          `https://api.github.com/users/${githubUsername}/repos?per_page=100&sort=updated`,
-          {
-            signal: controller.signal,
-            headers: {
-              Accept: "application/vnd.github+json",
-            },
-          },
-        );
+        const loadedStaticProjects = await loadStaticProjects();
 
-        if (!response.ok) {
-          throw new Error(`GitHub request failed with ${response.status}`);
+        if (loadedStaticProjects) {
+          return;
         }
-
-        const repos = await response.json();
-        const publicRepos = repos.filter((repo) => !repo.fork);
-
-        if (publicRepos.length > 0) {
-          setProjectCount(publicRepos.length);
-          setGithubProjects(publicRepos.slice(0, 6));
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("Failed to load generated project feed", error);
         }
+      }
+
+      try {
+        await loadBrowserProjects();
       } catch (error) {
         if (error.name !== "AbortError") {
           console.error("Failed to load GitHub projects", error);
@@ -854,9 +1036,9 @@ export default function Portfolio() {
           ]} />
         </div>
         <p className="hero-desc">
-          Results-driven CS graduate fusing full-stack development, AI/ML, and banking domain knowledge
-          to craft digital systems that are intelligent, fast, and impactful.
-          Based in Andhra Pradesh, India — open to relocation.
+          Results-driven Frontend Developer with experience in React.js, Django, banking-focused
+          application UI, and AI/ML project work. I build responsive, user-centered digital
+          products and I am based in Andhra Pradesh, India, open to relocation.
         </p>
         <div className="hero-ctas">
           <a href="#projects" className="btn-primary">View Projects</a>
@@ -890,8 +1072,8 @@ export default function Portfolio() {
           {[
             ["7.8", "CGPA — B.Tech CSE"],
             ["85%", "ML Model Accuracy"],
-            ["30%", "Page Load Improved"],
-            ["2+", "Internships Completed"],
+            ["1 Year", "Banking App Frontend"],
+            ["3", "Experience Highlights"],
             [`${projectCount}`, "GitHub Projects"],
           ].map(([n, l]) => (
             <div key={l} className="stat-item">
@@ -900,6 +1082,7 @@ export default function Portfolio() {
             </div>
           ))}
         </div>
+        <p className="profile-summary">{professionalSummary}</p>
 
         {/* Education */}
         <div className="section-label">// education</div>
@@ -908,14 +1091,22 @@ export default function Portfolio() {
           <TiltCard className="edu-card">
             <div className="edu-degree">B.Tech — Computer Science & Engineering</div>
             <div className="edu-school">Jawaharlal Nehru Technological University, Anantapur</div>
-            <div className="edu-year">2020 — 2024</div>
+            <div className="edu-meta">KMM Institute of Science and Technology College, Tirupati</div>
+            <div className="edu-year">2020 — May 2024</div>
             <div className="edu-cgpa">7.8 / 10</div>
+            <div className="edu-coursework">
+              Relevant coursework: C, Data Structures, Java, Python, Machine Learning, Deep Learning
+            </div>
           </TiltCard>
           <TiltCard className="edu-card">
             <div className="edu-degree">Intermediate — MPC</div>
             <div className="edu-school">Board of Intermediate Education, Andhra Pradesh</div>
-            <div className="edu-year">2018 — 2020</div>
+            <div className="edu-meta">NRI Junior College, Tirupati</div>
+            <div className="edu-year">2018 — May 2020</div>
             <div className="edu-cgpa">8.1 / 10</div>
+            <div className="edu-coursework">
+              Relevant coursework: Mathematics, Physics, Chemistry
+            </div>
           </TiltCard>
         </div>
       </section>
@@ -939,7 +1130,7 @@ export default function Portfolio() {
       {/* EXPERIENCE */}
       <section id="experience">
         <div className="section-label">// work history</div>
-        <h2 className="section-title">Internship Experience</h2>
+        <h2 className="section-title">Experience</h2>
         <div className="timeline">
           {internships.map(i => (
             <div key={i.role} className="tl-item">
@@ -958,18 +1149,15 @@ export default function Portfolio() {
       {/* PROJECTS */}
       <section id="projects">
         <div className="section-label">// builds</div>
-        <h2 className="section-title">GitHub Projects</h2>
+        <h2 className="section-title">Featured GitHub Projects</h2>
         <div className="projects-grid">
           {githubProjects.map((project, idx) => (
             <TiltCard key={project.html_url} className="project-card">
               <div className="project-num">0{idx + 1}</div>
-              <div className="project-title">{project.name}</div>
+              <div className="project-title">{getProjectTitle(project)}</div>
+              <div className="project-repo">GitHub: {getProjectRepoLabel(project)}</div>
               <div className="project-stack">
-                {[
-                  project.language || "GitHub",
-                  "Public Repo",
-                  `${project.stargazers_count} Stars`,
-                ].map((tag) => (
+                {getProjectTags(project).map((tag) => (
                   <span key={`${project.html_url}-${tag}`} className="stack-badge">{tag}</span>
                 ))}
               </div>
@@ -990,6 +1178,11 @@ export default function Portfolio() {
               <div className="project-accent" />
             </TiltCard>
           ))}
+        </div>
+        <div className="projects-footer">
+          <a href={`https://github.com/${githubUsername}?tab=repositories`} target="_blank" rel="noreferrer" className="btn-outline">
+            View All GitHub Projects
+          </a>
         </div>
       </section>
 

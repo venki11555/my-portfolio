@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-04-03T13:26:58.657Z",
+  "username": "venki11555",
+  "totalCount": 3,
+  "maxVisibleProjects": 6,
+  "projects": [
+    {
+      "name": "my-portfolio",
+      "title": "my-portfolio",
+      "html_url": "https://github.com/venki11555/my-portfolio",
+      "description": null,
+      "homepage": null,
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "pushed_at": "2026-04-01T19:31:20Z",
+      "visibility": "public",
+      "tags": [],
+      "repositoryLinkEnabled": true,
+      "featured": false
+    },
+    {
+      "name": "pixelaudiowebsite",
+      "title": "pixelaudiowebsite",
+      "html_url": "https://github.com/venki11555/pixelaudiowebsite",
+      "description": null,
+      "homepage": null,
+      "language": null,
+      "stargazers_count": 0,
+      "pushed_at": "2026-03-05T04:45:14Z",
+      "visibility": "public",
+      "tags": [],
+      "repositoryLinkEnabled": true,
+      "featured": false
+    },
+    {
+      "name": "PROJECT-SNYCON-INFRA",
+      "title": "PROJECT-SNYCON-INFRA",
+      "html_url": "https://github.com/venki11555/PROJECT-SNYCON-INFRA",
+      "description": null,
+      "homepage": null,
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "pushed_at": "2026-02-13T12:51:34Z",
+      "visibility": "public",
+      "tags": [],
+      "repositoryLinkEnabled": true,
+      "featured": false
+    }
+  ]
+}
