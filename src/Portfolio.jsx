@@ -29,7 +29,10 @@ const GlobalStyle = () => (
       color: var(--text);
       font-family: 'Exo 2', sans-serif;
       overflow-x: hidden;
-      cursor: none;
+      cursor: default;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
     }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--dark2); }
@@ -71,7 +74,12 @@ const GlobalStyle = () => (
       color: var(--cyan); letter-spacing: 0.12em;
       text-shadow: var(--glow-cyan);
     }
-    .nav-links { display: flex; gap: 2.4rem; }
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
     .nav-links a {
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.82rem; color: var(--text);
@@ -91,6 +99,7 @@ const GlobalStyle = () => (
     section {
       position: relative; z-index: 1;
       padding: 110px 6vw 80px;
+      scroll-margin-top: 110px;
       max-width: 1280px; margin: 0 auto;
     }
 
@@ -196,6 +205,8 @@ const GlobalStyle = () => (
       border: 1px solid var(--border); padding: 8px 14px;
       border-radius: 2px; text-decoration: none;
       transition: all 0.25s; background: var(--card-bg);
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
     .contact-chip:hover { color: var(--cyan); border-color: var(--cyan); }
     .contact-chip svg { width: 14px; height: 14px; stroke: currentColor; fill: none; }
@@ -220,14 +231,14 @@ const GlobalStyle = () => (
     /* ── Skills Grid ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
       gap: 24px;
     }
     .skill-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       padding: 28px 24px;
-      position: relative; overflow: hidden;
+      position: relative; overflow: hidden; min-width: 0;
       transition: all 0.3s;
       clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
     }
@@ -304,14 +315,14 @@ const GlobalStyle = () => (
     /* ── Projects ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
       gap: 28px;
     }
     .project-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       padding: 36px 30px;
-      position: relative; overflow: hidden;
+      position: relative; overflow: hidden; min-width: 0;
       transition: all 0.35s;
       clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
       transform-style: preserve-3d;
@@ -345,6 +356,7 @@ const GlobalStyle = () => (
       position: relative;
       z-index: 1;
       letter-spacing: 0.06em;
+      overflow-wrap: anywhere;
     }
     .project-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
     .stack-badge {
@@ -428,6 +440,27 @@ const GlobalStyle = () => (
       background: var(--card-bg);
       padding: 24px 26px;
     }
+    .section-intro {
+      max-width: 780px;
+      margin-bottom: 34px;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: rgba(200,232,240,0.72);
+    }
+    .subsection-block { margin-top: 56px; }
+    .card-copy {
+      font-size: 0.86rem;
+      line-height: 1.75;
+      color: rgba(200,232,240,0.7);
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .project-points {
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
+    }
 
     /* ── Contact Section ── */
     .contact-grid {
@@ -447,6 +480,8 @@ const GlobalStyle = () => (
       text-decoration: none; padding: 14px 18px;
       border: 1px solid var(--border); background: var(--card-bg);
       transition: all 0.25s;
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
     .contact-link-row:hover { border-color: var(--cyan); color: var(--cyan); }
     .contact-link-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; flex-shrink: 0; }
@@ -549,6 +584,7 @@ const GlobalStyle = () => (
       background: var(--card-bg); border: 1px solid var(--border);
       padding: 28px 24px; position: relative; overflow: hidden;
       clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+      min-width: 0;
       transition: all 0.3s;
     }
     .edu-card:hover { border-color: rgba(0,245,255,0.5); transform: translateY(-3px); }
@@ -576,6 +612,171 @@ const GlobalStyle = () => (
       line-height: 1.7;
       color: rgba(200,232,240,0.66);
     }
+
+    @media (max-width: 980px) {
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 5vw;
+      }
+      .nav-links {
+        gap: 12px 18px;
+        justify-content: flex-start;
+      }
+      section {
+        padding: 124px 5vw 76px;
+        scroll-margin-top: 124px;
+      }
+      #hero { padding-top: 120px; }
+      .hero-desc,
+      .profile-summary,
+      .section-intro,
+      .contact-info p {
+        max-width: none;
+      }
+      .contact-grid { gap: 28px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-logo { font-size: 1rem; }
+      .nav-links a {
+        font-size: 0.74rem;
+        letter-spacing: 0.08em;
+      }
+      section {
+        padding: 118px 20px 68px;
+        scroll-margin-top: 118px;
+      }
+      #hero {
+        min-height: auto;
+        padding-top: 118px;
+      }
+      .section-title { margin-bottom: 40px; }
+      .hero-sub {
+        font-size: 0.72rem;
+        line-height: 1.8;
+        letter-spacing: 0.14em;
+      }
+      .hero-role {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 24px;
+      }
+      .hero-desc {
+        font-size: 0.92rem;
+        margin-bottom: 34px;
+      }
+      .hero-ctas {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+      }
+      .btn-primary,
+      .btn-outline {
+        width: 100%;
+        text-align: center;
+        padding: 14px 18px;
+      }
+      .hero-contacts {
+        margin-top: 40px;
+        gap: 14px;
+      }
+      .contact-chip {
+        width: 100%;
+        padding: 12px 14px;
+      }
+      .stat-strip { margin-bottom: 56px; }
+      .stat-item {
+        min-width: 50%;
+        padding: 26px 16px;
+      }
+      .stat-item:nth-child(2n) { border-right: none; }
+      .profile-summary { padding: 22px 18px; }
+      .skill-card,
+      .project-card,
+      .edu-card,
+      .contact-right {
+        padding: 24px 18px;
+      }
+      .project-num {
+        font-size: 2.2rem;
+        top: 18px;
+        right: 18px;
+      }
+      .project-links {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .project-link { text-align: center; }
+      .projects-footer .btn-outline {
+        width: 100%;
+        text-align: center;
+      }
+      .contact-link-row {
+        padding: 12px 14px;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 540px) {
+      section {
+        padding: 112px 18px 60px;
+        scroll-margin-top: 112px;
+      }
+      #hero { padding-top: 110px; }
+      .nav-links { gap: 10px 14px; }
+      .hero-name {
+        font-size: clamp(2.1rem, 15vw, 3.2rem);
+        line-height: 1.08;
+      }
+      .section-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+      }
+      .section-title {
+        font-size: clamp(1.4rem, 8vw, 2rem);
+      }
+      .skills-grid,
+      .projects-grid,
+      .edu-grid {
+        gap: 18px;
+      }
+      .stat-item {
+        min-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .stat-item:last-child { border-bottom: none; }
+      .project-card {
+        padding: 24px 18px 26px;
+      }
+      .project-repo { padding-right: 44px; }
+      .contact-right { padding: 28px 18px; }
+      .available-tag { flex-wrap: wrap; }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      .cursor-dot,
+      .cursor-ring {
+        display: none;
+      }
+      .glitch::before,
+      .glitch::after {
+        display: none;
+      }
+      .skill-card:hover,
+      .project-card:hover,
+      .edu-card:hover,
+      .btn-primary:hover,
+      .btn-outline:hover,
+      .project-link:hover,
+      .contact-link-row:hover,
+      .contact-chip:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
   `}</style>
 );
 
@@ -588,22 +789,38 @@ function NeuralCanvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) {
+      return undefined;
+    }
     const ctx = canvas.getContext("2d");
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const density = prefersReducedMotion ? 52000 : isTouchDevice ? 32000 : 18000;
+    const minNodes = prefersReducedMotion ? 10 : isTouchDevice ? 14 : 20;
+
+    const buildNodes = () => {
+      const count = Math.max(minNodes, Math.floor((window.innerWidth * window.innerHeight) / density));
+      nodes.current = Array.from({ length: count }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.6 + 0.5,
+      }));
+    };
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      buildNodes();
+    };
     resize();
     window.addEventListener("resize", resize);
 
-    const N = Math.floor((window.innerWidth * window.innerHeight) / 18000);
-    nodes.current = Array.from({ length: N }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.6 + 0.5,
-    }));
-
     const onMove = (e) => { mouse.current = { x: e.clientX, y: e.clientY }; };
-    window.addEventListener("mousemove", onMove);
+    if (!isTouchDevice) {
+      window.addEventListener("mousemove", onMove);
+    }
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -621,7 +838,7 @@ function NeuralCanvas() {
         const dx = n.x - mouse.current.x;
         const dy = n.y - mouse.current.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
+        if (!isTouchDevice && dist > 0 && dist < 120) {
           n.x += (dx / dist) * 1.2;
           n.y += (dy / dist) * 1.2;
         }
@@ -664,7 +881,9 @@ function NeuralCanvas() {
     return () => {
       cancelAnimationFrame(animId.current);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMove);
+      if (!isTouchDevice) {
+        window.removeEventListener("mousemove", onMove);
+      }
     };
   }, []);
 
@@ -673,29 +892,56 @@ function NeuralCanvas() {
 
 /* ── Cursor ── */
 function CustomCursor() {
+  const supportsCustomCursor =
+    typeof window === "undefined"
+      ? true
+      : window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const pos = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (!supportsCustomCursor) {
+      return undefined;
+    }
+
     const move = (e) => { pos.current = { x: e.clientX, y: e.clientY }; };
     window.addEventListener("mousemove", move);
+    let frameId = 0;
     const loop = () => {
       ring.current.x += (pos.current.x - ring.current.x) * 0.12;
       ring.current.y += (pos.current.y - ring.current.y) * 0.12;
       if (dotRef.current) { dotRef.current.style.left = pos.current.x + "px"; dotRef.current.style.top = pos.current.y + "px"; }
       if (ringRef.current) { ringRef.current.style.left = ring.current.x + "px"; ringRef.current.style.top = ring.current.y + "px"; }
-      requestAnimationFrame(loop);
+      frameId = requestAnimationFrame(loop);
     };
     loop();
 
     const over = () => ringRef.current?.classList.add("expand");
     const out  = () => ringRef.current?.classList.remove("expand");
-    document.querySelectorAll("a, button, .skill-card, .project-card").forEach(el => { el.addEventListener("mouseenter", over); el.addEventListener("mouseleave", out); });
+    const interactiveElements = Array.from(
+      document.querySelectorAll("a, button, .skill-card, .project-card"),
+    );
 
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+    interactiveElements.forEach((el) => {
+      el.addEventListener("mouseenter", over);
+      el.addEventListener("mouseleave", out);
+    });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("mousemove", move);
+      interactiveElements.forEach((el) => {
+        el.removeEventListener("mouseenter", over);
+        el.removeEventListener("mouseleave", out);
+      });
+    };
+  }, [supportsCustomCursor]);
+
+  if (!supportsCustomCursor) {
+    return null;
+  }
 
   return (
     <>
@@ -730,28 +976,42 @@ function Typewriter({ phrases }) {
 
 /* ── 3D Tilt card wrapper ── */
 function TiltCard({ children, className }) {
+  const supportsTilt =
+    typeof window === "undefined"
+      ? true
+      : window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const ref = useRef(null);
   const onMove = useCallback((e) => {
+    if (!supportsTilt) return;
     const el = ref.current; if (!el) return;
     const { left, top, width, height } = el.getBoundingClientRect();
     const x = (e.clientX - left - width / 2) / (width / 2);
     const y = (e.clientY - top - height / 2) / (height / 2);
     el.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateZ(10px)`;
-  }, []);
+  }, [supportsTilt]);
   const onLeave = useCallback(() => {
     if (ref.current) ref.current.style.transform = "";
   }, []);
-  return <div ref={ref} className={className} onMouseMove={onMove} onMouseLeave={onLeave}>{children}</div>;
+  return (
+    <div
+      ref={ref}
+      className={className}
+      onMouseMove={supportsTilt ? onMove : undefined}
+      onMouseLeave={supportsTilt ? onLeave : undefined}
+    >
+      {children}
+    </div>
+  );
 }
 
 /* ─── DATA ─── */
 const skills = [
-  { cat: "Frontend", tags: ["React.js", "JavaScript", "HTML5", "CSS3", "Bootstrap", "Responsive Design"] },
-  { cat: "Backend & APIs", tags: ["Python", "Django", "REST APIs", "Authentication", "CRUD", "Backend Integration"] },
-  { cat: "Programming", tags: ["Java", "C", "SQL", "Data Structures"] },
-  { cat: "AI / ML", tags: ["Scikit-learn", "Pandas", "NumPy", "Neural Networks", "Machine Learning", "Deep Learning"] },
-  { cat: "Tools & Platforms", tags: ["Git", "GitHub", "VS Code", "Netlify", "Vercel"] },
-  { cat: "Finance & Banking", tags: ["Banking Ops", "Financial Analysis", "KYC/AML", "RBI Guidelines", "Loan Processing"] },
+  { cat: "Frontend", tags: ["React.js", "JavaScript", "HTML5", "CSS3", "Bootstrap", "Responsive UI"] },
+  { cat: "Backend & APIs", tags: ["Python", "Django", "REST APIs", "SQL", "Authentication", "CRUD"] },
+  { cat: "Programming", tags: ["Java", "C", "Data Structures", "OOP", "Problem Solving"] },
+  { cat: "AI / ML", tags: ["Scikit-learn", "Pandas", "NumPy", "Model Evaluation", "Machine Learning", "Deep Learning"] },
+  { cat: "Tools & Platforms", tags: ["Git", "GitHub", "VS Code", "Postman", "Netlify", "Vercel"] },
+  { cat: "Domain Knowledge", tags: ["Banking Workflows", "FinTech Products", "KYC/AML", "Financial Analysis", "Agile Collaboration"] },
 ];
 
 const githubUsername = "venki11555";
@@ -759,29 +1019,92 @@ const maxVisibleProjects = 6;
 const projectsDataUrl = `${process.env.PUBLIC_URL || ""}/github-projects.json`;
 
 const professionalSummary =
-  "Results-driven Frontend Developer with hands-on experience in React.js, JavaScript, HTML, CSS, and Bootstrap, along with practical exposure to Django, REST APIs, SQL, and full-stack application development. Worked on banking-focused Android application frontend development at Infiny Global Pvt Ltd and contributed to web projects including the Karnataka Suman TV website, which was designed by me. Also experienced in AI/ML-based project work, with a strong ability to build responsive, user-centered, and business-focused digital solutions. Eager to contribute to frontend, full-stack, or FinTech roles in a growth-oriented organization.";
+  "Computer Science graduate and frontend developer with hands-on experience building React.js interfaces, responsive UI systems, and business-oriented digital products. My background includes banking-focused application workflows, Django-based full-stack development, and AI/ML project exposure, giving me a practical understanding of both product usability and technical implementation. I enjoy translating requirements into clean, reliable user experiences and I am actively seeking frontend, full-stack, or FinTech opportunities where I can contribute with ownership, adaptability, and strong execution.";
+
+const professionalHighlights = [
+  {
+    title: "Frontend Delivery",
+    description:
+      "Build responsive and user-focused interfaces with strong attention to layout structure, usability, and clean implementation for business and banking-oriented applications.",
+    tags: ["React.js", "Responsive UI", "User Experience"],
+  },
+  {
+    title: "Full-Stack Exposure",
+    description:
+      "Comfortable working across the interface and backend boundary through Django, REST APIs, SQL, and integration workflows that support complete product delivery.",
+    tags: ["Django", "REST APIs", "SQL"],
+  },
+  {
+    title: "AI / ML Foundation",
+    description:
+      "Hands-on experience with Python-based data workflows, model evaluation, and machine learning experimentation on real-world business datasets.",
+    tags: ["Python", "Scikit-learn", "Pandas"],
+  },
+  {
+    title: "Professional Strengths",
+    description:
+      "Known for learning quickly, adapting to project needs, collaborating well with teams, and approaching delivery with a practical problem-solving mindset.",
+    tags: ["Ownership", "Team Collaboration", "Continuous Learning"],
+  },
+];
 
 const projectMetadata = {
   pixelaudiowebsite: {
     priority: 1,
     title: "Karnataka Suman TV Website",
     description:
-      "Designed by me and developed as part of project work delivered through Infiny Global Pvt Ltd. The website focuses on clean content presentation, responsive layout behavior, and a professional media-style browsing experience.",
-    tags: ["Frontend", "Media Website", "Designed by Me", "Infiny Global Pvt Ltd"],
+      "Designed by me and delivered as part of project work through Infiny Global Pvt Ltd. The site focuses on structured media presentation, responsive browsing, and a polished content-first experience for viewers.",
+    tags: ["Frontend", "Media Platform", "UI Design", "Client Delivery"],
+    highlights: [
+      "Created a professional layout direction that improves content hierarchy and section readability.",
+      "Focused on responsive behavior and practical screen composition for a production-ready browsing experience.",
+    ],
   },
   "PROJECT-SNYCON-INFRA": {
     priority: 2,
     title: "Backend Projects",
     description:
-      "Backend and infrastructure-oriented project work that reflects my ability to contribute beyond the UI layer and collaborate on real-world application delivery.",
-    tags: ["Backend", "Infrastructure", "JavaScript", "Project Setup"],
+      "Backend and infrastructure-oriented repository work that reflects my ability to contribute beyond the UI layer and support real-world application setup, structure, and delivery.",
+    tags: ["Backend", "Infrastructure", "JavaScript", "Project Support"],
+    highlights: [
+      "Shows exposure to project setup and engineering tasks that support broader application development.",
+      "Represents my willingness to work across layers instead of limiting contributions to frontend implementation only.",
+    ],
   },
   "my-portfolio": {
     priority: 3,
     title: "Portfolio Website",
     description:
-      "Personal portfolio project built with React.js to present my experience, professional summary, and selected GitHub work in a clean and recruiter-friendly format.",
-    tags: ["React.js", "Portfolio", "Frontend", "Responsive UI"],
+      "Personal portfolio built with React.js to present my experience, technical strengths, education, and featured GitHub work in a recruiter-friendly and professional format.",
+    tags: ["React.js", "Portfolio", "Personal Branding", "Responsive UI"],
+    highlights: [
+      "Built to communicate my profile clearly without sacrificing visual personality or responsiveness.",
+      "Organizes education, skills, experience, and selected work into a clean one-page presentation for recruiters and hiring teams.",
+    ],
+  },
+  builders: {
+    priority: 4,
+    title: "Suraksha Builders & Developers Website",
+    description:
+      "Professional website project created for Suraksha Builders & Developers to present residential and commercial projects with a modern, brand-aligned, and business-focused web experience.",
+    tags: ["TypeScript", "Real Estate Website", "React", "Modern UI"],
+    highlights: [
+      "Designed to showcase property offerings, brand credibility, and project presentation in a clean digital format suitable for client-facing use.",
+      "Built as a modern TypeScript-based web experience with structured frontend organization for scalable UI components and content sections.",
+      "Focuses on professional visual presentation, usability, and clear communication for a real-estate business audience.",
+    ],
+  },
+  music: {
+    priority: 5,
+    title: "Music Player Web App",
+    description:
+      "Modern TypeScript-based music player web application with an Android-inspired experience, progressive web app support, real-time lyrics, and queue-driven playback interactions.",
+    tags: ["TypeScript", "Music Player", "PWA", "Real-Time Lyrics"],
+    highlights: [
+      "Built with a modern React and Vite setup to deliver a polished browser-based music listening experience with app-like behavior.",
+      "Includes features such as real-time lyrics, queue management, and media-focused interaction patterns that improve usability for music playback.",
+      "Demonstrates my ability to work on richer frontend product experiences beyond standard business websites by combining UI polish with interactive functionality.",
+    ],
   },
 };
 
@@ -883,15 +1206,19 @@ function getProjectRepoLabel(project) {
   return `${githubUsername}/${project.name}`;
 }
 
+function getProjectHighlights(project) {
+  return projectMetadata[project.name]?.highlights || [];
+}
+
 const internships = [
   {
     year: "1 Year",
     role: "Frontend Developer",
     company: "Infiny Global Private LTD",
     bullets: [
-      "Worked on frontend development for banking-focused Android application workflows",
-      "Built and improved user interfaces for reliable financial and customer-facing journeys",
-      "Collaborated with backend and business teams to deliver practical real-world product features",
+      "Contributed to frontend delivery for banking-focused Android application workflows used in practical business environments",
+      "Built and refined interface components to support reliable customer journeys and task-based financial processes",
+      "Worked with backend and business teams to translate requirements into clear, usable product screens",
     ],
   },
   {
@@ -899,9 +1226,9 @@ const internships = [
     role: "AI Intern",
     company: "Sun Square Technologies",
     bullets: [
-      "Developed AI/ML models using Python for real-world business datasets",
-      "Performed model evaluation, hyperparameter tuning, and performance benchmarking",
-      "Collaborated with senior engineers to integrate predictive models into workflows",
+      "Built Python-based AI/ML models on business datasets and supported experimentation across multiple approaches",
+      "Performed preprocessing, evaluation, hyperparameter tuning, and benchmarking to improve model quality",
+      "Collaborated with engineers to understand how predictive outputs fit into broader workflow needs",
     ],
   },
   {
@@ -909,11 +1236,56 @@ const internships = [
     role: "Python Full Stack Developer Intern",
     company: "Besant Technologies, Bangalore",
     bullets: [
-      "Built full-stack applications using Django (backend) and React.js (frontend)",
-      "Designed and consumed RESTful APIs for dynamic data processing",
-      "Created responsive UIs using Bootstrap and modern HTML/CSS",
-      "Participated in code reviews and Agile sprint cycles",
+      "Developed end-to-end applications using Django for backend logic and React.js for frontend delivery",
+      "Designed and integrated REST APIs to support dynamic data-driven user experiences",
+      "Created responsive interfaces with Bootstrap, HTML, and CSS while following structured development practices",
+      "Participated in reviews, debugging, and sprint-based delivery with a focus on maintainable code",
     ],
+  },
+];
+
+const currentFocus = [
+  "Frontend or full-stack software roles where I can contribute to production-ready user experiences",
+  "FinTech, business applications, or product teams that value ownership, learning, and dependable execution",
+  "Opportunities involving React.js, Django, REST API integration, and responsive interface development",
+];
+
+const professionalReadiness = [
+  {
+    title: "Frontend Development",
+    points: [
+      "Ability to build responsive and user-friendly interfaces with React.js, JavaScript, HTML, and CSS",
+      "Understanding of component-based UI structure, layout consistency, and practical usability",
+      "Experience adapting screens and flows for business-focused application needs",
+    ],
+    tags: ["React.js", "JavaScript", "Responsive UI"],
+  },
+  {
+    title: "Backend Integration",
+    points: [
+      "Knowledge of Django, REST APIs, SQL, and full-stack integration workflows",
+      "Ability to work with dynamic data, API-driven screens, and business logic requirements",
+      "Comfort collaborating across frontend and backend responsibilities when needed",
+    ],
+    tags: ["Django", "REST APIs", "SQL"],
+  },
+  {
+    title: "Engineering Practices",
+    points: [
+      "Use of Git and GitHub for version control, project tracking, and code collaboration",
+      "Problem-solving mindset supported by programming fundamentals and debugging practice",
+      "Exposure to structured delivery through reviews, iterations, and maintainable implementation",
+    ],
+    tags: ["Git", "GitHub", "Problem Solving"],
+  },
+  {
+    title: "Professional Readiness",
+    points: [
+      "Strong willingness to learn quickly and adapt to company tools, standards, and delivery processes",
+      "Clear communication and collaboration across technical and business teams",
+      "Interest in contributing to IT, product, and FinTech environments with ownership and consistency",
+    ],
+    tags: ["Teamwork", "Adaptability", "Ownership"],
   },
 ];
 
@@ -1021,7 +1393,7 @@ export default function Portfolio() {
 
       {/* HERO */}
       <section id="hero">
-        <div className="hero-sub">// Full-Stack Developer · AI/ML Engineer · FinTech Enthusiast</div>
+        <div className="hero-sub">// Frontend Developer · React.js · Django · AI/ML</div>
         <h1 className="hero-name">
           <span className="glitch" data-text="KOLAKATLA">KOLAKATLA</span>
           <br />
@@ -1029,16 +1401,16 @@ export default function Portfolio() {
         </h1>
         <div className="hero-role">
           <Typewriter phrases={[
-            "Building the future with Python & React",
-            "85% Accuracy Neural Networks",
-            "Full Stack · AI/ML · Banking Tech",
-            "Turning data into decisions",
+            "Frontend developer for modern web interfaces",
+            "React.js, Django, REST APIs, and AI/ML",
+            "Building reliable products for business and fintech use cases",
+            "Turning requirements into polished user experiences",
           ]} />
         </div>
         <p className="hero-desc">
-          Results-driven Frontend Developer with experience in React.js, Django, banking-focused
-          application UI, and AI/ML project work. I build responsive, user-centered digital
-          products and I am based in Andhra Pradesh, India, open to relocation.
+          Frontend developer with experience building responsive web interfaces, banking-oriented
+          application workflows, and AI/ML-backed projects. I combine clean UI implementation with
+          backend awareness in Django and REST APIs to deliver practical, user-focused products.
         </p>
         <div className="hero-ctas">
           <a href="#projects" className="btn-primary">View Projects</a>
@@ -1057,10 +1429,10 @@ export default function Portfolio() {
             <svg viewBox="0 0 24 24" strokeWidth="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
             github.com/venki11555
           </a>
-          <span className="contact-chip">
+          <a href="tel:+919182483997" className="contact-chip">
             <svg viewBox="0 0 24 24" strokeWidth="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             +91 9182483997
-          </span>
+          </a>
         </div>
       </section>
 
@@ -1084,8 +1456,24 @@ export default function Portfolio() {
         </div>
         <p className="profile-summary">{professionalSummary}</p>
 
+        <div className="subsection-block">
+          <div className="section-label">// strengths</div>
+          <h2 className="section-title">Professional Highlights</h2>
+          <div className="skills-grid">
+            {professionalHighlights.map((item) => (
+              <TiltCard key={item.title} className="skill-card">
+                <div className="skill-cat">{item.title}</div>
+                <p className="card-copy">{item.description}</p>
+                <div className="skill-tags">
+                  {item.tags.map((tag) => <span key={`${item.title}-${tag}`} className="skill-tag">{tag}</span>)}
+                </div>
+              </TiltCard>
+            ))}
+          </div>
+        </div>
+
         {/* Education */}
-        <div className="section-label">// education</div>
+        <div className="section-label" style={{ marginTop: 56 }}>// education</div>
         <h2 className="section-title">Education</h2>
         <div className="edu-grid">
           <TiltCard className="edu-card">
@@ -1109,12 +1497,17 @@ export default function Portfolio() {
             </div>
           </TiltCard>
         </div>
+
       </section>
 
       {/* SKILLS */}
       <section id="skills">
         <div className="section-label">// capabilities</div>
         <h2 className="section-title">Technical Skills</h2>
+        <p className="section-intro">
+          My toolkit covers frontend implementation, backend fundamentals, AI/ML experimentation,
+          and domain awareness for business and fintech-oriented products.
+        </p>
         <div className="skills-grid">
           {skills.map(s => (
             <TiltCard key={s.cat} className="skill-card">
@@ -1125,12 +1518,38 @@ export default function Portfolio() {
             </TiltCard>
           ))}
         </div>
+
+        <div className="subsection-block">
+          <div className="section-label">// readiness</div>
+          <h2 className="section-title">Professional Readiness</h2>
+          <p className="section-intro">
+            This section highlights the practical strengths I can bring into a software team,
+            including technical capability, collaboration, and adaptability to project needs.
+          </p>
+          <div className="skills-grid">
+            {professionalReadiness.map((item) => (
+              <TiltCard key={item.title} className="skill-card">
+                <div className="skill-cat">{item.title}</div>
+                <ul className="tl-bullets project-points">
+                  {item.points.map((point) => <li key={`${item.title}-${point}`}>{point}</li>)}
+                </ul>
+                <div className="skill-tags" style={{ marginTop: 18 }}>
+                  {item.tags.map((tag) => <span key={`${item.title}-${tag}`} className="skill-tag">{tag}</span>)}
+                </div>
+              </TiltCard>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* EXPERIENCE */}
       <section id="experience">
         <div className="section-label">// work history</div>
         <h2 className="section-title">Experience</h2>
+        <p className="section-intro">
+          Each role has strengthened a different part of my profile, from production-facing UI
+          delivery to full-stack development and AI/ML experimentation on business use cases.
+        </p>
         <div className="timeline">
           {internships.map(i => (
             <div key={i.role} className="tl-item">
@@ -1150,6 +1569,10 @@ export default function Portfolio() {
       <section id="projects">
         <div className="section-label">// builds</div>
         <h2 className="section-title">Featured GitHub Projects</h2>
+        <p className="section-intro">
+          These projects represent the work that best reflects my current profile across personal
+          branding, interface development, and broader engineering exposure.
+        </p>
         <div className="projects-grid">
           {githubProjects.map((project, idx) => (
             <TiltCard key={project.html_url} className="project-card">
@@ -1162,6 +1585,11 @@ export default function Portfolio() {
                 ))}
               </div>
               <p className="project-desc">{getProjectDescription(project)}</p>
+              {getProjectHighlights(project).length > 0 && (
+                <ul className="tl-bullets project-points">
+                  {getProjectHighlights(project).map((point) => <li key={`${project.name}-${point}`}>{point}</li>)}
+                </ul>
+              )}
               <div className="project-meta">
                 <span>Updated {formatProjectDate(project.pushed_at)}</span>
               </div>
@@ -1193,9 +1621,10 @@ export default function Portfolio() {
         <div className="contact-grid">
           <div className="contact-info">
             <p>
-              I'm actively seeking entry-level roles in IT and banking/FinTech sectors
-              where technical expertise meets financial innovation. Open to full-time positions,
-              freelance work, and collaborations across India.
+              I am actively seeking entry-level frontend, full-stack, and FinTech opportunities
+              where I can contribute to real products, continue learning quickly, and grow within
+              a collaborative engineering environment. Open to full-time roles, internships, and
+              project-based work across India.
             </p>
             <div className="contact-links">
               <a href="mailto:venkateshkolakatla94@gmail.com" className="contact-link-row">
@@ -1221,14 +1650,23 @@ export default function Portfolio() {
             <div className="available-tag">
               <div className="avail-dot" /> AVAILABLE FOR IMMEDIATE JOINING
             </div>
-            <div className="location-line">📍 Open to relocation across India</div>
-            <div className="location-label" style={{ marginBottom: 20, fontSize: "0.8rem", color: "rgba(200,232,240,0.5)", fontFamily: "'Share Tech Mono', monospace" }}>Actively preparing for IBPS PO / SBI PO</div>
+            <div className="location-line">Open to relocation across India</div>
+            <div className="location-label" style={{ marginBottom: 20, fontSize: "0.8rem", color: "rgba(200,232,240,0.5)", fontFamily: "'Share Tech Mono', monospace" }}>Based in Andhra Pradesh, India</div>
+            <div className="certs-list" style={{ marginTop: 0, marginBottom: 22 }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "0.78rem", color: "var(--cyan)", letterSpacing: "0.18em", marginBottom: 14 }}>CURRENT FOCUS</div>
+              {currentFocus.map((item) => (
+                <div key={item} className="cert-item">
+                  <div className="cert-dot" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
             <div className="certs-list">
               <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "0.78rem", color: "var(--cyan)", letterSpacing: "0.18em", marginBottom: 14 }}>CERTIFICATIONS</div>
               {[
                 "NPTEL — Cloud Computing (IIT / NPTEL)",
                 "Python for Data Science — Besant Technologies",
-                "Banking Exam Prep — IBPS/SBI PO Syllabus",
+                "Foundational preparation in banking and financial services workflows",
               ].map(c => (
                 <div key={c} className="cert-item">
                   <div className="cert-dot" />
